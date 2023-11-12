@@ -90,4 +90,65 @@ describe('movie service test', () => {
       }
     });
   });
+
+  describe('delete one method', () => {
+    it('delete a movie', () => {
+      service.create({
+        id: '1',
+        subject: 'wow movie',
+        genres: ['SF'],
+        year: 2012,
+      });
+      service.create({
+        id: '2',
+        subject: 'wow movie2',
+        genres: ['SF'],
+        year: 2013,
+      });
+      const beforeDelete = service.getAll();
+      service.deleteOne('2');
+      const afterDelete = service.getAll();
+      expect(afterDelete.length).toEqual(beforeDelete.length - 1);
+    });
+
+    it('should return 404', () => {
+      try {
+        service.deleteOne('123');
+      } catch (e) {
+        expect(e).toBeInstanceOf(NotFoundException);
+      }
+    });
+  });
+
+  describe('create method', () => {
+    it('create movie', () => {
+      const beforeCreate = service.getAll().length;
+
+      service.create({
+        id: '1',
+        subject: 'wow movie',
+        genres: ['SF'],
+        year: 2012,
+      });
+
+      const afterCreate = service.getAll().length;
+      expect(afterCreate).toBeGreaterThan(beforeCreate);
+    });
+  });
+
+  describe('update method', () => {
+    it('update movie', () => {
+      service.create({
+        id: '1',
+        subject: 'wow movie',
+        genres: ['SF'],
+        year: 2012,
+      });
+
+      service.update('1', { subject: 'wow movie2', year: 2013 });
+      const afterUpdate = service.getOne('1');
+      expect(afterUpdate.subject).toEqual('wow movie2');
+      expect(afterUpdate.year).toEqual(2013);
+    });
+  });
 });

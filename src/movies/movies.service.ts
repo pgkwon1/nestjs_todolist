@@ -19,16 +19,20 @@ export class MoviesService {
     return findMovie;
   }
 
-  getMovieByTitle(subject: string): string {
-    return `here movie by title = ${subject}`;
-  }
-
   create(movieData: Movie) {
-    console.log(typeof this.movies);
     this.movies.push({
       ...movieData,
     });
   }
 
-  update(movieData: UpdateMovies) {}
+  deleteOne(id: string) {
+    this.getOne(id);
+    this.movies = this.movies.filter((movie) => movie.id !== id);
+  }
+
+  update(id: string, movieData: UpdateMovies) {
+    const movie = this.getOne(id);
+    this.deleteOne(id);
+    this.movies.push({ ...movie, ...movieData });
+  }
 }
