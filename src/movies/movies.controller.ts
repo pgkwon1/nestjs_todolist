@@ -15,8 +15,8 @@ import { Movie } from './entities/movies.entity';
 export class MoviesController {
   constructor(private readonly movieService: MoviesService) {}
   @Get('/getMovie')
-  getMovie(): string {
-    return this.movieService.getOne();
+  getMovie(id: string): Movie {
+    return this.movieService.getOne(id);
   }
 
   @Get('/AllMovie')
@@ -33,15 +33,9 @@ export class MoviesController {
     return true;
   }
 
-  @Get(':title')
-  getTitle(@Param('title') title: string) {
-    return this.movieService.getMovieByTitle(title);
-  }
-
   @Patch('/update/:id')
   updateMovie(@Body('id') id: string, @Body('title') subject: string) {
-    return this.movieService.update({
-      id,
+    return this.movieService.update(id, {
       subject,
     });
   }
