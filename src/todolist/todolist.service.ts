@@ -1,15 +1,46 @@
 import { Injectable } from '@nestjs/common';
 import TodoList from './entities/todolist.model';
 import { InjectModel } from '@nestjs/sequelize';
+import { TodoListInsert, TodoListUpdate } from './entities/todolist.entity';
 
 @Injectable()
 export class TodolistService {
   constructor(@InjectModel(TodoList) private todoList: typeof TodoList) {}
 
-  async add({ subject, startedAt }) {
+  async getList(): Promise<TodoList[]> {
+    return this.todoList.findAll();
+  }
+  async add({ subject, startedAt }: TodoListInsert): Promise<void> {
     await this.todoList.create({
       subject,
       startedAt,
+    });
+  }
+
+  async update({ id, subject, isFinish }: TodoListUpdate): Promise<boolean> {
+    const [result] = await this.todoList.update(
+      {
+        subject,
+        isFinish,
+      },
+      {
+        where: {
+          id,
+        },
+      },
+    );
+
+    if (result === 0) {
+      return false;
+    }
+    return true;
+  }
+
+  async delete(id: string): Promise<number> {
+    return await this.todoList.destroy({
+      where: {
+        id,
+      },
     });
   }
 }

@@ -1,15 +1,22 @@
-import { IsBoolean, IsDate, IsNumber, IsString } from 'class-validator';
+import { OmitType, PartialType } from '@nestjs/mapped-types';
+import { IsBoolean, IsDateString, IsString } from 'class-validator';
 
 export default class TodoList {
+  @IsString()
+  readonly id: string;
+
   @IsString()
   readonly subject: string;
 
   @IsBoolean()
   readonly isFinish: boolean;
 
-  @IsDate()
-  readonly startedAt: Date;
+  @IsDateString()
+  readonly startedAt?: Date;
 
-  @IsDate()
+  @IsDateString()
   readonly finishedAt?: Date;
 }
+export class TodoListInsert extends OmitType(TodoList, ['id', 'isFinish']) {}
+
+export class TodoListUpdate extends PartialType(TodoList) {}

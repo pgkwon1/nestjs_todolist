@@ -5,6 +5,7 @@ import {
   Model,
   PrimaryKey,
   Table,
+  UpdatedAt,
 } from 'sequelize-typescript';
 
 @Table({
@@ -34,4 +35,7 @@ export default class TodoList extends Model<TodoList> {
 
   @CreatedAt
   readonly createdAt: Date;
+
+  @UpdatedAt
+  readonly updatedAt: Date;
 }
