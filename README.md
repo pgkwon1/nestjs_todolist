@@ -7,13 +7,13 @@
 
 [Back-End]
 <br>
-Nest.JS : 10.1.18<br>
+Nest.JS: v10.1.18<br>
 Node: v20.9.0
 </p>
 
 <p>
 [Front-End]
 <br>
-React: ^18<br>
-Next.JS: 13.5.4
+React: v18<br>
+Next.JS: v13.5.4
 </p>
