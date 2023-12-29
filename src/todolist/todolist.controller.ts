@@ -33,11 +33,12 @@ export class TodolistController {
 
   @Patch('/update/:id')
   async update(@Body() updateData: TodoListUpdate, @Param('id') id: string) {
-    const { subject, isFinish } = updateData;
+    const { subject, isFinish, finishedAt } = updateData;
     return this.todoListService.update({
       id,
       subject,
       isFinish,
+      finishedAt,
     });
   }
 

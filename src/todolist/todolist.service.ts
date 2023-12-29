@@ -19,11 +19,17 @@ export class TodolistService {
     });
   }
 
-  async update({ id, subject, isFinish }: TodoListUpdate): Promise<boolean> {
+  async update({
+    id,
+    subject,
+    isFinish,
+    finishedAt,
+  }: TodoListUpdate): Promise<boolean> {
     const [result] = await this.todoList.update(
       {
         subject,
         isFinish,
+        finishedAt,
       },
       {
         where: {
