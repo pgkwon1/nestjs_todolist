@@ -12,11 +12,8 @@ export class ResponseInterceptor implements NestInterceptor {
     context: ExecutionContext,
     next: CallHandler<any>,
   ): Observable<any> | Promise<Observable<any>> {
-    const statusCode = context.switchToHttp().getResponse().statusCode;
-    const message =
-      statusCode === 200
-        ? '성공적으로 데이터를 불러왔습니다.'
-        : '오류가 발생하였습니다.';
+    const statusCode: number = context.switchToHttp().getResponse().statusCode;
+    const message = statusCode >= 500 ? 'error' : 'success';
     return next.handle().pipe(
       map((data) => ({
         statusCode,
