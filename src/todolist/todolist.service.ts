@@ -8,7 +8,9 @@ export class TodolistService {
   constructor(@InjectModel(TodoList) private todoList: typeof TodoList) {}
 
   async getList(): Promise<TodoList[]> {
-    return this.todoList.findAll();
+    return this.todoList.findAll({
+      order: [['createdAt', 'DESC']],
+    });
   }
   async add({ subject, startedAt }: TodoListInsert): Promise<void> {
     await this.todoList.create({
