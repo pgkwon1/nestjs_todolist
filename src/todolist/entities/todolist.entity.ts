@@ -17,6 +17,10 @@ export default class TodoList {
   @IsDateString()
   readonly finishedAt?: Date;
 }
-export class TodoListInsert extends OmitType(TodoList, ['id', 'isFinish']) {}
+export class TodoListInsert extends OmitType(TodoList, [
+  'id',
+  'isFinish',
+  'finishedAt',
+]) {}
 
 export class TodoListUpdate extends PartialType(TodoList) {}
