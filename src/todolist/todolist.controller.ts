@@ -43,7 +43,12 @@ export class TodolistController {
   }
 
   @Delete('/delete/:id')
-  async delete(@Param('id') id: string): Promise<number> {
-    return this.todoListService.delete(id);
+  async delete(@Param('id') id: string): Promise<boolean> {
+    const result = await this.todoListService.delete(id);
+    if (result === 0) {
+      return false;
+    }
+
+    return true;
   }
 }
