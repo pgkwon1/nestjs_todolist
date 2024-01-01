@@ -25,7 +25,7 @@ export class TodolistController {
   @Post('/add')
   async add(@Body() todoData: TodoListInsert) {
     const { subject, startedAt } = todoData;
-    return this.todoListService.add({
+    return await this.todoListService.add({
       subject,
       startedAt,
     });
