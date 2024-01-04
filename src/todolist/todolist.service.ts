@@ -12,9 +12,14 @@ export class TodolistService {
       order: [['createdAt', 'DESC']],
     });
   }
-  async add({ subject, startedAt }: TodoListInsert): Promise<string | boolean> {
+  async add({
+    subject,
+    startedAt,
+    category,
+  }: TodoListInsert): Promise<string | boolean> {
     const { id } = await this.todoList.create({
       subject,
+      category,
       startedAt,
     });
 

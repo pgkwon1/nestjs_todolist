@@ -11,6 +11,9 @@ export default class TodoList {
   @IsBoolean()
   readonly isFinish: boolean;
 
+  @IsString()
+  readonly category: string;
+
   @IsDateString()
   readonly startedAt?: Date;
 

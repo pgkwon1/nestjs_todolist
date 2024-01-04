@@ -28,6 +28,9 @@ export default class TodoList extends Model<TodoList> {
   readonly isFinish: boolean;
 
   @Column
+  readonly category: string;
+
+  @Column
   readonly startedAt: Date;
 
   @Column
