@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { MoviesModule } from './movies/movies.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TodolistModule } from './todolist/todolist.module';
+import { TodolistModule } from './modules/todolist/todolist.module';
 import { SequelizeModule } from '@nestjs/sequelize';
-import TodoList from './todolist/entities/todolist.model';
+import TodoList from './modules/todolist/entities/todolist.model';
 
 @Module({
   imports: [
