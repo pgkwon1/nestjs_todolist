@@ -25,8 +25,7 @@ export class MemberService {
   }
 
   async getUser({ userId, password }): Promise<string | boolean> {
-    const result = await this.isUser({ userId });
-
+    const result = await this.isUser(userId);
     if (result) {
       const member = await this.memberModel.findOne({
         where: {
@@ -35,7 +34,6 @@ export class MemberService {
       });
 
       const newPassword = MemberService.encryptPassword(password, member.salt);
-      console.log(newPassword);
       if (newPassword !== member.password) {
         return false;
       }
