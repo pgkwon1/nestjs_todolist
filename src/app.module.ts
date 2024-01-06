@@ -6,10 +6,20 @@ import { TodolistModule } from './modules/todolist/todolist.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import TodoList from './modules/todolist/entities/todolist.model';
 import { MemberModule } from './modules/member/member.module';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+import { AuthModule } from './modules/auth/auth.module';
 import MemberModel from './modules/member/entities/member.model';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
+    JwtModule.register({
+      secret: process.env.JWT_SECRET_KEY,
+      signOptions: { expiresIn: process.env.JWT_EXPIRE_TIME },
+    }),
+    PassportModule,
     MoviesModule,
     TodolistModule,
     SequelizeModule.forRoot({
@@ -22,6 +32,7 @@ import MemberModel from './modules/member/entities/member.model';
       models: [TodoList, MemberModel],
     }),
     MemberModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
