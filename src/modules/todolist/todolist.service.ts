@@ -2,13 +2,19 @@ import { Injectable } from '@nestjs/common';
 import TodoList from './entities/todolist.model';
 import { InjectModel } from '@nestjs/sequelize';
 import { TodoListInsert, TodoListUpdate } from './entities/todolist.entity';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class TodolistService {
   constructor(@InjectModel(TodoList) private todoList: typeof TodoList) {}
 
-  async getList(): Promise<TodoList[]> {
+  async getList(date: string): Promise<TodoList[]> {
     return this.todoList.findAll({
+      where: {
+        startedAt: {
+          [Op.between]: [`${date} 00:00:00`, `${date} 23:59:59`],
+        },
+      },
       order: [['createdAt', 'DESC']],
     });
   }

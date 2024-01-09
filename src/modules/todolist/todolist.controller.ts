@@ -17,9 +17,9 @@ import { TodolistService } from './todolist.service';
 export class TodolistController {
   constructor(private todoListService: TodolistService) {}
 
-  @Get('/')
-  async getList(): Promise<TodoList[]> {
-    return this.todoListService.getList();
+  @Get('/:date')
+  async getList(@Param('date') date: string): Promise<TodoList[]> {
+    return this.todoListService.getList(date);
   }
 
   @Post('/add')
