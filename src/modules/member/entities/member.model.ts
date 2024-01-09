@@ -1,3 +1,4 @@
+import { UUIDV4 } from 'sequelize';
 import {
   Column,
   CreatedAt,
@@ -13,7 +14,9 @@ import {
 @Table
 export default class MemberModel extends Model<MemberModel> {
   @PrimaryKey
-  @Column
+  @Column({
+    defaultValue: UUIDV4(),
+  })
   readonly id: string;
 
   @Column
@@ -24,6 +27,9 @@ export default class MemberModel extends Model<MemberModel> {
 
   @Column
   readonly salt: string;
+
+  @Column
+  readonly nickname: string;
 
   @Column
   readonly registerAt: Date;

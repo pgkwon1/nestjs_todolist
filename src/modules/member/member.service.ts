@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import MemberModel from './entities/member.model';
 import * as jwt from 'jsonwebtoken';
 import * as CryptoJS from 'crypto-js';
+import { IRegisterRequestDto } from './entities/member.entity';
 
 @Injectable()
 export class MemberService {
@@ -41,6 +42,30 @@ export class MemberService {
       return MemberService.generateJwtToken(userId);
     }
     return false;
+  }
+
+  async register({
+    userId,
+    password,
+    nickname,
+  }: IRegisterRequestDto): Promise<boolean> {
+    const salt: string = MemberService.createSalt();
+    const encryptPassword: string = MemberService.encryptPassword(
+      password,
+      salt,
+    );
+
+    const result = await this.memberModel.create({
+      userId,
+      password: encryptPassword,
+      salt,
+      nickname,
+    });
+
+    if (result === null) {
+      return false;
+    }
+    return true;
   }
 
   static generateJwtToken(userId: string): string {
