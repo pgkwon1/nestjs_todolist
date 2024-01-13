@@ -12,3 +12,9 @@ export class ExistsMemberException extends MemberException {
     super(message, code, 'ExistsMemberException');
   }
 }
+
+export class FailRegisterException extends MemberException {
+  constructor(message: string, code: number) {
+    super(message, code, 'FailRegisterException');
+  }
+}

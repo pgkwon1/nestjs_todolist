@@ -1,7 +1,10 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { MemberService } from './member.service';
 import { IRegisterRequestDto } from './entities/member.entity';
-import { ExistsMemberException } from '../../exceptions/MemberException';
+import {
+  ExistsMemberException,
+  FailRegisterException,
+} from '../../exceptions/MemberException';
 
 @Controller('member')
 export class MemberController {
@@ -25,10 +28,10 @@ export class MemberController {
     }
 
     const result = await this.memberService.register(registerData);
-    if (result) {
-      return true;
+    if (!result) {
+      throw new FailRegisterException('회원가입에 실패하였습니다.', 200);
     }
 
-    return false;
+    return true;
   }
 }
