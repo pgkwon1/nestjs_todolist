@@ -19,6 +19,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class TodolistController {
   constructor(private todoListService: TodolistService) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('/:date')
   async getList(@Param('date') date: string): Promise<TodoList[]> {
     return this.todoListService.getList(date);
