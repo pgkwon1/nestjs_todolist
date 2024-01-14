@@ -22,11 +22,13 @@ export class TodolistService {
     subject,
     startedAt,
     category,
+    userId,
   }: TodoListInsert): Promise<string | boolean> {
     const { id } = await this.todoList.create({
       subject,
       category,
       startedAt,
+      userId,
     });
 
     if (typeof id !== 'string') {

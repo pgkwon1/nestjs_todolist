@@ -20,6 +20,9 @@ export default class TodoList extends Model<TodoList> {
   readonly id: string;
 
   @Column
+  readonly userId: string;
+
+  @Column
   readonly subject: string;
 
   @Column({

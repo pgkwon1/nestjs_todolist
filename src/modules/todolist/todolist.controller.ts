@@ -27,11 +27,12 @@ export class TodolistController {
   @UseGuards(AuthGuard('jwt'))
   @Post('/add')
   async add(@Body() todoData: TodoListInsert) {
-    const { subject, startedAt, category } = todoData;
+    const { subject, startedAt, category, userId } = todoData;
     return await this.todoListService.add({
       subject,
       category,
       startedAt,
+      userId,
     });
   }
 

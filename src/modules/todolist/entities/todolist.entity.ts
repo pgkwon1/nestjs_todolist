@@ -6,6 +6,9 @@ export default class TodoList {
   readonly id: string;
 
   @IsString()
+  readonly userId: string;
+
+  @IsString()
   readonly subject: string;
 
   @IsBoolean()
