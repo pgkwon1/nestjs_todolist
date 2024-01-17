@@ -27,6 +27,7 @@ export class TodoListInsert extends OmitType(TodoList, [
   'id',
   'isFinish',
   'finishedAt',
+  'userId',
 ]) {}
 
 export class TodoListUpdate extends PartialType(TodoList) {}

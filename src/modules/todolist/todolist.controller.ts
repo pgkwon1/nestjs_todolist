@@ -14,6 +14,7 @@ import TodoList, {
 } from './entities/todolist.entity';
 import { TodolistService } from './todolist.service';
 import { AuthGuard } from '@nestjs/passport';
+import { Jwt } from 'src/decorators/jwt.decorator';
 
 @Controller('todolist')
 export class TodolistController {
@@ -21,20 +22,25 @@ export class TodolistController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get('/:date')
-  async getList(@Param('date') date: string): Promise<TodoList[]> {
-    return this.todoListService.getList(date);
+  async getList(
+    @Param('date') date: string,
+    @Jwt() userId: string,
+  ): Promise<TodoList[]> {
+    return this.todoListService.getList({ date, userId });
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Post('/add')
-  async add(@Body() todoData: TodoListInsert) {
-    const { subject, startedAt, category, userId } = todoData;
-    return await this.todoListService.add({
-      subject,
-      category,
-      startedAt,
+  async add(@Body() todoData: TodoListInsert, @Jwt() userId: string) {
+    const { subject, startedAt, category } = todoData;
+    return await this.todoListService.add(
+      {
+        subject,
+        category,
+        startedAt,
+      },
       userId,
-    });
+    );
   }
 
   @UseGuards(AuthGuard('jwt'))
